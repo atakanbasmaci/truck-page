@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CallButtons from '../../components/CallButtons.astro';
+import Faq from '../../components/Faq.astro';
+import ServiceIcon from '../../components/ServiceIcon.astro';
+import { services, routesByKm, routePath, servicePath } from '../../lib/site';
+import { service as serviceSchema, faqPage, breadcrumbs } from '../../lib/schema';
+import type { Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { service: s.slug }, props: { s } }));
+}
+
+const { s } = Astro.props as { s: Service };
+const path = servicePath(s);
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Hizmetler', path: '/hizmetler/' },
+  { name: s.h1, path },
+];
+const wa = `Merhaba, ${s.loadWord} yük taşıması için fiyat almak istiyorum.`;
+const others = services.filter((o) => o.slug !== s.slug);
+---
+
+<Base
+  title={s.title}
+  description={s.description}
+  wa={wa}
+  schema={[
+    serviceSchema({
+      name: s.h1,
+      description: s.description,
+      path,
+      areas: ['İzmir', ...routesByKm.map((r) => r.city)],
+      serviceType: s.h1,
+    }),
+    faqPage(s.faq),
+    breadcrumbs(crumbs),
+  ]}
+>
+  <section class="section top">
+    <div class="wrap prose">
+      <Breadcrumbs items={crumbs} />
+      <ServiceIcon slug={s.slug} size={52} class="hero-icon" />
+      <h1>{s.h1}</h1>
+      {s.temp && <p class="temp">Kasa sıcaklığı: {s.temp.label}</p>}
+      <p class="intro">{s.intro}</p>
+      <CallButtons wa={wa} />
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap cols-2">
+      <div>
+        <h2>Taşıdığımız Ürünler</h2>
+        <ul>{s.products.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <div>
+        <h2>Nasıl Taşıyoruz?</h2>
+        {
+          s.points.map((p) => (
+            <div class="pt">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Güzergahlar</h2>
+      <p>
+        Bu hizmeti İzmir şehir içinde ve İzmir'den aşağıdaki illere, bu illerden İzmir'e veriyoruz:
+      </p>
+      <ul class="cities">
+        <li><a href="/izmir-ici-frigorifik-nakliye/">İzmir içi</a></li>
+        {routesByKm.map((r) => <li><a href={routePath(r)}>{r.city}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Faq items={s.faq} />
+      <p class="others">
+        Diğer hizmetlerimiz:
+        {others.map((o, i) => <>{i > 0 && ', '}<a href={servicePath(o)}>{o.h1.toLocaleLowerCase('tr')}</a></>)}.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top {
+    padding-top: 1.5rem;
+  }
+  .hero-icon {
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+  .temp {
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+  .pt h3 {
+    margin-bottom: 0.2rem;
+  }
+  .cities {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    column-gap: 2rem;
+  }
+  @media (min-width: 700px) {
+    .cities {
+      columns: 4;
+    }
+  }
+  .others {
+    margin-top: 2rem;
+  }
+</style>

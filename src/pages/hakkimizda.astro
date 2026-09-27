@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Truck from '../components/Truck.astro';
+import CallButtons from '../components/CallButtons.astro';
+import { company, routes } from '../lib/site';
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Hakkımızda', path: '/hakkimizda/' },
+];
+---
+
+<Base
+  title="Hakkımızda | ATA Taşımacılık İzmir"
+  description={`ATA Taşımacılık, İzmir merkezli frigorifik nakliye firması. İzmir içi ve ${routes.length} ile donuk, soğuk ve kuru gıda taşımacılığı, ${company.fleet.count} frigorifik kamyon, 7/24 hizmet.`}
+  schema={[breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="prose">
+        <h1>Hakkımızda</h1>
+        <p class="intro">
+          {company.name}, {company.founded ? `${company.founded} yılında ` : ''}İzmir'de kurulmuş bir gıda nakliye
+          firmasıdır. Frigorifik kamyonlarımızla donuk, soğuk ve kuru gıda taşıyoruz.
+        </p>
+        <p>
+          Kamyonlarımızı her yüklemeden önce temizliyor ve yükün istediği sıcaklığa getiriyoruz. Araçlarımızda gıda
+          dışında yük taşımıyoruz.
+        </p>
+        <p>
+          İzmir şehir içinde çok yoğun çalışıyoruz: üreticiden depoya, depodan zincir markete ve restorana günlük
+          teslimatlar yapıyoruz. Bunun yanında İzmir'den {routes.length} ile düzenli sefer yapıyor, dönüşte bu
+          illerden İzmir'e yük taşıyoruz.
+        </p>
+      </div>
+
+      <Truck class="truck" />
+
+      <div class="cols-2">
+        <div>
+          <h2>Filo</h2>
+          <table class="table">
+            <tbody>
+              <tr><th scope="row">Araç sayısı</th><td>{company.fleet.count} frigorifik kamyon</td></tr>
+              {
+                company.fleet.types.filter((t) => t.capacity).map((t) => (
+                  <tr>
+                    <th scope="row">{t.name}</th>
+                    <td>{t.capacity}</td>
+                  </tr>
+                ))
+              }
+              <tr><th scope="row">Sıcaklık aralığı</th><td>{company.fleet.tempRange}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h2>Belgeler</h2>
+          <ul>{company.documents.map((d) => <li>{d}</li>)}</ul>
+        </div>
+      </div>
+
+      <div class="cta"><CallButtons /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .truck {
+    width: 100%;
+    max-width: 56rem;
+    margin: 2.5rem 0 3rem;
+  }
+  .cta {
+    margin-top: 2.5rem;
+  }
+</style>

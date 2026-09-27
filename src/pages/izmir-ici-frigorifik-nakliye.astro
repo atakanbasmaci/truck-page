@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallButtons from '../components/CallButtons.astro';
+import Faq from '../components/Faq.astro';
+import { services, servicePath, company } from '../lib/site';
+import { service, faqPage, breadcrumbs } from '../lib/schema';
+
+const path = '/izmir-ici-frigorifik-nakliye/';
+const title = 'İzmir İçi Frigorifik Nakliye | ATA Taşımacılık';
+const description =
+  'İzmir şehir içi frigorifik nakliye: donuk, soğuk ve kuru gıda taşımacılığı. Merkez ve çevre ilçelere aynı gün teslim, komple ve parsiyel araç.';
+
+const merkez = ['Konak', 'Bornova', 'Karşıyaka', 'Bayraklı', 'Çiğli', 'Gaziemir', 'Buca', 'Balçova', 'Narlıdere', 'Güzelbahçe'];
+const yakinCevre = ['Menemen', 'Kemalpaşa', 'Torbalı', 'Menderes', 'Urla', 'Seferihisar'];
+const uzakIlce = ['Aliağa', 'Foça', 'Bergama', 'Dikili', 'Tire', 'Ödemiş', 'Bayındır', 'Selçuk', 'Çeşme', 'Kiraz'];
+
+const faq = [
+  {
+    q: 'İzmir içinde aynı gün teslimat yapıyor musunuz?',
+    a: 'Konak, Bornova, Karşıyaka, Bayraklı, Çiğli, Gaziemir gibi merkez ilçelerde çoğu yükü aynı gün, hatta gün içinde birden fazla seferle teslim ediyoruz. Aliağa, Bergama, Ödemiş gibi daha uzak ilçelerde teslim saati yükleme saatine göre değişir.',
+  },
+  {
+    q: "İzmir'in hangi ilçelerine gidiyorsunuz?",
+    a: `İzmir'in tüm ilçelerine çalışıyoruz: ${[...merkez, ...yakinCevre, ...uzakIlce].join(', ')} ve diğerleri. Adresiniz listede yoksa da arayın, planlayalım.`,
+  },
+  {
+    q: 'Şehir içinde parsiyel ya da küçük yük alıyor musunuz?',
+    a: 'Evet. Birkaç paletlik şehir içi yükleri de aynı sıcaklıktaki diğer teslimatlarla birleştirerek taşıyoruz.',
+  },
+  {
+    q: 'Şehir içi nakliye fiyatı nasıl belirleniyor?',
+    a: 'İlçeye, yükün cinsi ve sıcaklığına, palet sayısına ve teslim noktası sayısına göre. Arayın, fiyatı telefonda hemen verelim.',
+  },
+];
+
+const wa = "Merhaba, İzmir şehir içi nakliye için fiyat almak istiyorum.";
+
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'İzmir İçi Frigorifik Nakliye', path },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  wa={wa}
+  schema={[
+    service({
+      name: 'İzmir içi frigorifik nakliye',
+      description,
+      path,
+      areas: ['İzmir', ...merkez, ...yakinCevre, ...uzakIlce],
+      serviceType: 'İzmir içi frigorifik nakliye',
+    }),
+    faqPage(faq),
+    breadcrumbs(crumbs),
+  ]}
+>
+  <section class="section top">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="top-grid">
+        <div>
+          <h1>İzmir İçi Frigorifik Nakliye</h1>
+          <p class="intro">
+            Şehirler arası seferler kadar İzmir içinde de yoğun çalışıyoruz. Üreticiden depoya, depodan
+            zincir markete ya da restorana; donuk, soğuk ve kuru gıdayı İzmir'in her ilçesine frigorifik
+            kamyonla taşıyoruz.
+          </p>
+          <CallButtons wa={wa} />
+        </div>
+        <table class="table facts">
+          <caption class="visually-hidden">İzmir içi nakliye bilgileri</caption>
+          <tbody>
+            <tr><th scope="row">Kapsam</th><td>İzmir'in tüm ilçeleri</td></tr>
+            <tr><th scope="row">Sıcaklık</th><td>{company.fleet.tempRange}</td></tr>
+            <tr><th scope="row">Taşıma</th><td>Komple araç veya parsiyel</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap cols-2">
+      <article>
+        <h2>Merkez İlçeler</h2>
+        <p>Gün içinde birden fazla sefer planlayabildiğimiz, en sık çalıştığımız bölge.</p>
+        <ul>{merkez.map((d) => <li>{d}</li>)}</ul>
+      </article>
+      <article>
+        <h2>Yakın ve Uzak Çevre İlçeler</h2>
+        <p>Mesafeye göre aynı gün ya da ertesi sabah teslim planlıyoruz.</p>
+        <ul>{[...yakinCevre, ...uzakIlce].map((d) => <li>{d}</li>)}</ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Hangi İşler İçin Çağırılıyoruz?</h2>
+      <ul>
+        <li>Üretici veya toptancıdan zincir market ve bakkal depolarına dağıtım</li>
+        <li>Otel, restoran ve toplu yemek tedarikçilerine düzenli teslimat</li>
+        <li>Fabrika ve soğuk hava deposu arası transfer</li>
+        <li>Adnan Menderes Havalimanı ve İzmir Limanı bağlantılı kargo teslimleri</li>
+        <li>Şehir içi ara depo değişimi ve acil tek seferlik taşımalar</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <Faq items={faq} heading="İzmir İçi Nakliye Hakkında Sık Sorulan Sorular" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols-2">
+      <nav aria-labelledby="hiz">
+        <h2 id="hiz">Hizmetlerimiz</h2>
+        <ul>
+          {services.map((s) => <li><a href={servicePath(s)}>{s.h1}</a></li>)}
+        </ul>
+      </nav>
+      <nav aria-labelledby="sehirlerarasi">
+        <h2 id="sehirlerarasi">Şehirler Arası Nakliye</h2>
+        <p>İzmir'den illere ve illerden İzmir'e sefer yapıyoruz.</p>
+        <p><a href="/guzergahlar/">Tüm güzergahları görün →</a></p>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top {
+    padding-top: 1.5rem;
+  }
+  .top-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+  .facts th {
+    width: 36%;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .facts td {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  @media (min-width: 900px) {
+    .top-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+</style>

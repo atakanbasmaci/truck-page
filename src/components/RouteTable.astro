@@ -1,0 +1,50 @@
+---
+// Güzergah listesi: il ve bölge.
+import { routesByKm, routePath } from '../lib/site';
+---
+
+<div class="rt-scroll">
+  <table class="table rt">
+    <caption class="visually-hidden">İzmir çıkışlı ve varışlı güzergahlar</caption>
+    <thead>
+      <tr>
+        <th scope="col">Güzergah</th>
+            <th scope="col">Bölge</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        routesByKm.map((r) => (
+          <tr>
+            <th scope="row">
+              <a href={routePath(r)}>İzmir – {r.city}</a>
+            </th>
+            <td>{r.region}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .rt a {
+    font-weight: 600;
+  }
+  .rt tbody tr:hover {
+    background: var(--alt);
+  }
+  .note {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+  @media (max-width: 599px) {
+    .hide-sm {
+      display: none;
+    }
+    .rt {
+      font-size: 0.97rem;
+    }
+  }
+</style>

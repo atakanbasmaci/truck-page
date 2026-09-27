@@ -1,0 +1,103 @@
+---
+// GA4 ve Google Ads etiketi. company.json içinde kimlik yoksa hiçbir şey çıktılanmaz.
+// Consent Mode v2: ziyaretçi onay verene kadar çerez yazılmaz.
+import { company } from '../lib/site';
+const t = company.tracking;
+const enabled = Boolean(t.ga4 || t.ads);
+const primary = t.ga4 || t.ads;
+const cfg = JSON.stringify(t);
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline define:vars={{ cfg }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { dataLayer.push(arguments); };
+        var t = JSON.parse(cfg);
+        var saved = null;
+        try { saved = localStorage.getItem('cerez'); } catch (e) {}
+        var g = saved === 'evet' ? 'granted' : 'denied';
+        gtag('consent', 'default', { ad_storage: g, analytics_storage: g, ad_user_data: g, ad_personalization: g });
+        gtag('js', new Date());
+        if (t.ga4) gtag('config', t.ga4);
+        if (t.ads) gtag('config', t.ads);
+        window.__trackCfg = t;
+      </script>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${primary}`}></script>
+
+      <div class="cerez" id="cerez" hidden>
+        <p>
+          Reklamlarımızın işe yarayıp yaramadığını ölçmek için çerez kullanıyoruz.{' '}
+          <a href="/kvkk/">Ayrıntılar</a>
+        </p>
+        <div>
+          <button type="button" data-cerez="hayir">Reddet</button>
+          <button type="button" data-cerez="evet">Kabul et</button>
+        </div>
+      </div>
+
+      <script is:inline>
+        (function () {
+          var box = document.getElementById('cerez');
+          var saved = null;
+          try { saved = localStorage.getItem('cerez'); } catch (e) {}
+          if (!saved) box.hidden = false;
+          box.addEventListener('click', function (e) {
+            var v = e.target && e.target.getAttribute('data-cerez');
+            if (!v) return;
+            try { localStorage.setItem('cerez', v); } catch (err) {}
+            if (v === 'evet') {
+              gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
+            }
+            box.hidden = true;
+          });
+
+          // Arama ve WhatsApp tıklamaları: GA4 olayı + Ads dönüşümü
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('[data-track]');
+            if (!a) return;
+            var kind = a.getAttribute('data-track');
+            var t = window.__trackCfg || {};
+            gtag('event', kind === 'call' ? 'arama_tiklama' : 'whatsapp_tiklama', { sayfa: location.pathname });
+            var label = kind === 'call' ? t.adsCallLabel : t.adsWhatsappLabel;
+            if (t.ads && label) gtag('event', 'conversion', { send_to: t.ads + '/' + label });
+          });
+        })();
+      </script>
+
+      <style>
+        .cerez {
+          position: fixed;
+          left: 0.75rem;
+          right: 0.75rem;
+          bottom: calc(var(--callbar-h) + 0.75rem + env(safe-area-inset-bottom));
+          z-index: 60;
+          max-width: 34rem;
+          background: var(--white);
+          border: 2px solid var(--navy);
+          padding: 0.9rem 1rem;
+          font-size: 0.92rem;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .cerez[hidden] { display: none; }
+        .cerez p { margin: 0; flex: 1 1 14rem; }
+        .cerez div { display: flex; gap: 0.5rem; }
+        .cerez button {
+          font: 600 0.95rem/1 var(--font);
+          padding: 0.7rem 1rem;
+          border: 2px solid var(--navy);
+          background: var(--white);
+          color: var(--navy);
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        .cerez button[data-cerez='evet'] { background: var(--navy); color: var(--white); }
+        @media (min-width: 900px) { .cerez { bottom: 1rem; } }
+      </style>
+    </>
+  )
+}

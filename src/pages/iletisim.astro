@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallButtons from '../components/CallButtons.astro';
+import { company } from '../lib/site';
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'İletişim', path: '/iletisim/' },
+];
+const a = company.address;
+const addressLine = [a.street, a.district, a.city].filter(Boolean).join(', ');
+const mapsHref = company.gbp || `https://www.google.com/maps/search/?api=1&query=${company.geo.lat},${company.geo.lng}`;
+---
+
+<Base
+  title="İletişim ve Fiyat Teklifi | ATA Taşımacılık İzmir"
+  description={`ATA Taşımacılık iletişim bilgileri: ${company.phone.display}. İzmir frigorifik nakliye fiyat teklifi için arayın veya WhatsApp'tan yazın.`}
+  schema={[breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap cols-2">
+      <div>
+        <Breadcrumbs items={crumbs} />
+        <h1>İletişim</h1>
+        <p class="intro">
+          Fiyat teklifi ve planlama için bizi arayabilir veya WhatsApp'tan yazabilirsiniz. Yükleme ve teslim adresini, yükün
+          cinsini, sıcaklığını ve palet sayısını belirtmeniz yeterli.
+        </p>
+        <CallButtons />
+      </div>
+      <table class="table info">
+        <tbody>
+          <tr><th scope="row">Telefon</th><td><a href={`tel:${company.phone.e164}`} data-track="call">{company.phone.display}</a></td></tr>
+          {company.email && <tr><th scope="row">E-posta</th><td><a href={`mailto:${company.email}`}>{company.email}</a></td></tr>}
+          <tr><th scope="row">Adres</th><td>{addressLine}<br /><a href={mapsHref} rel="noopener" target="_blank">Haritada göster</a></td></tr>
+          <tr><th scope="row">Hizmet saatleri</th><td>{company.hours.label}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+  .info {
+    align-self: end;
+  }
+  .info th {
+    width: 38%;
+    font-weight: 400;
+    color: var(--muted);
+  }
+</style>

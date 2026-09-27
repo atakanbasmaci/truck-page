@@ -1,0 +1,44 @@
+---
+import type { Faq } from '../data/services';
+interface Props {
+  items: Faq[];
+  heading?: string;
+}
+const { items, heading = 'Sık Sorulan Sorular' } = Astro.props;
+---
+
+<section class="faq" aria-labelledby="sss">
+  <h2 id="sss">{heading}</h2>
+  <div class="faq-list">
+    {
+      items.map((f) => (
+        <div class="qa">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    display: grid;
+    gap: 0.5rem 3rem;
+  }
+  .qa {
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .qa h3 {
+    margin-bottom: 0.35rem;
+  }
+  .qa p {
+    color: var(--text);
+  }
+  @media (min-width: 900px) {
+    .faq-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+// Mobilde ekranın altına sabitlenen arama ve WhatsApp çubuğu
+import Icon from './Icon.astro';
+import { telHref, waHref } from '../lib/site';
+interface Props {
+  wa?: string;
+}
+const { wa } = Astro.props;
+---
+
+<div class="callbar" role="region" aria-label="Hızlı iletişim">
+  <a class="cb cb-call" href={telHref} data-track="call"><Icon name="phone" /> Ara</a>
+  <a class="cb cb-wa" href={waHref(wa)} data-track="whatsapp" rel="noopener" target="_blank"
+    ><Icon name="whatsapp" /> WhatsApp</a
+  >
+</div>
+
+<style>
+  .callbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
+  }
+  .cb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: var(--callbar-h);
+    font: 600 1.05rem/1 var(--font);
+    text-decoration: none;
+  }
+  .cb :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+  .cb-call {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .cb-wa {
+    color: var(--navy);
+  }
+  @media (min-width: 900px) {
+    .callbar {
+      display: none;
+    }
+  }
+</style>

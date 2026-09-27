@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallButtons from '../components/CallButtons.astro';
+import Faq from '../components/Faq.astro';
+import { routes, services, routePath, servicePath, nearby, company } from '../lib/site';
+import { service, faqPage, breadcrumbs } from '../lib/schema';
+import type { Route } from '../data/routes';
+
+export function getStaticPaths() {
+  return routes.map((r) => ({ params: { route: `izmir-${r.slug}-frigorifik-nakliye` }, props: { r } }));
+}
+
+const { r } = Astro.props as { r: Route };
+const path = routePath(r);
+const near = nearby(r, 3);
+
+const title = `İzmir ${r.city} Frigorifik Nakliye | ATA Taşımacılık`;
+const description = `İzmir'den ${r.dat}, ${r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıma. Komple ve parsiyel araç seçenekleri.`;
+
+const faq = [
+  {
+    q: `${r.city} için hangi araçlar müsait?`,
+    a: `Yükünüzün büyüklüğüne göre komple araç ya da parsiyel taşıma öneriyoruz. Uygun aracı ve tarihi telefonda birlikte belirliyoruz.`,
+  },
+  {
+    q: `${r.abl} İzmir'e yük taşıyor musunuz?`,
+    a: `Evet. ${r.abl} İzmir'e ${r.inLoads.slice(0, 3).map((l) => l.toLocaleLowerCase('tr')).join(', ')} gibi yükler taşıyoruz. Dönüş seferine denk gelen yüklerde fiyat avantajı olabilir.`,
+  },
+  {
+    q: `${r.city} için parsiyel yük gönderebilir miyim?`,
+    a: 'Evet. Aracı doldurmayan yükleri aynı sıcaklıktaki diğer yüklerle birleştirerek taşıyoruz. Parsiyel sevkiyatta yükleme günü hattın doluluğuna göre belirlenir.',
+  },
+  {
+    q: 'Fiyat nasıl belirleniyor?',
+    a: 'Araç tipine (komple veya parsiyel), sıcaklığa, palet sayısına ve yükleme-teslim noktalarına göre. Yükünüzün bilgileriyle arayın, fiyatı telefonda bildirelim.',
+  },
+];
+
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Güzergahlar', path: '/guzergahlar/' },
+  { name: `İzmir – ${r.city}`, path },
+];
+
+const wa = `Merhaba, İzmir – ${r.city} arası nakliye için fiyat almak istiyorum.`;
+---
+
+<Base
+  title={title}
+  description={description}
+  wa={wa}
+  schema={[
+    service({
+      name: `İzmir – ${r.city} frigorifik nakliye`,
+      description,
+      path,
+      areas: ['İzmir', r.city],
+      serviceType: 'Frigorifik nakliye',
+    }),
+    faqPage(faq),
+    breadcrumbs(crumbs),
+  ]}
+>
+  <section class="section top">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="top-grid">
+        <div>
+          <h1>İzmir – {r.city} Frigorifik Nakliye</h1>
+          <p class="intro">
+            İzmir'den {r.dat} ve {r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıyoruz. Komple araç ve
+            parsiyel taşıma seçenekleri mevcuttur.
+          </p>
+          <CallButtons wa={wa} />
+        </div>
+        <table class="table facts">
+          <caption class="visually-hidden">İzmir – {r.city} güzergah bilgileri</caption>
+          <tbody>
+            <tr><th scope="row">Güzergah</th><td>{r.road}</td></tr>
+            <tr><th scope="row">Sıcaklık</th><td>{company.fleet.tempRange}</td></tr>
+            <tr><th scope="row">Taşıma</th><td>Komple araç veya parsiyel</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap cols-2">
+      <article>
+        <h2>İzmir'den {r.dat}</h2>
+        <p>{r.outbound}</p>
+        <p class="label">Sık taşıdığımız yükler:</p>
+        <ul>{r.outLoads.map((l) => <li>{l}</li>)}</ul>
+      </article>
+      <article>
+        <h2>{r.abl} İzmir'e</h2>
+        <p>{r.inbound}</p>
+        <p class="label">Sık taşıdığımız yükler:</p>
+        <ul>{r.inLoads.map((l) => <li>{l}</li>)}</ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>{r.city} İçinde Yükleme ve Teslim</h2>
+      <p>
+        {r.city} genelinde tüm adreslere yükleme ve teslim yapıyoruz. En sık çalıştığımız bölgeler: {r.areas.join(', ')}.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap cols-2">
+      <nav aria-labelledby="yakin">
+        <h2 id="yakin">Diğer Güzergahlar</h2>
+        <ul>
+          {near.map((n) => <li><a href={routePath(n)}>İzmir – {n.city}</a></li>)}
+          <li><a href="/guzergahlar/">Tüm güzergahlar</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="hiz">
+        <h2 id="hiz">Hizmetlerimiz</h2>
+        <ul>
+          {services.map((s) => <li><a href={servicePath(s)}>{s.h1}</a></li>)}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top {
+    padding-top: 1.5rem;
+  }
+  .top-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+  .facts th {
+    width: 36%;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .facts td {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .label {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  @media (min-width: 900px) {
+    .top-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+</style>

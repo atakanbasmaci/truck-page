@@ -1,0 +1,37 @@
+{
+  "_eksik": [],
+  "site": "https://www.izmirfrigonakliye.com.tr",
+  "name": "ATA Taşımacılık",
+  "legalName": "ATA Taşımacılık",
+  "phone": { "display": "0 543 610 81 04", "e164": "+905436108104" },
+  "whatsapp": "905436108104",
+  "email": "",
+  "address": {
+    "street": "Atıfbey Mahallesi, 11/3. Sokak No:4/A",
+    "district": "Gaziemir",
+    "city": "İzmir",
+    "postalCode": "35410",
+    "country": "TR"
+  },
+  "geo": { "lat": 38.3201674, "lng": 27.133359 },
+  "hours": {
+    "label": "7 gün 24 saat",
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "founded": 2015,
+  "fleet": {
+    "count": 5,
+    "types": [{ "name": "Frigorifik kamyon", "capacity": "" }],
+    "tempRange": "−18°C ile +25°C arası"
+  },
+  "documents": ["K1 Yetki Belgesi", "Emtia (yük) sigortası"],
+  "gbp": "",
+  "tracking": {
+    "ga4": "",
+    "ads": "",
+    "adsCallLabel": "",
+    "adsWhatsappLabel": ""
+  }
+}

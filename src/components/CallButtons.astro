@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import { telHref, waHref, company } from '../lib/site';
+interface Props {
+  wa?: string;
+}
+const { wa } = Astro.props;
+---
+
+<div class="btn-row">
+  <a class="btn btn-primary" href={telHref} data-track="call">
+    <Icon name="phone" />
+    {company.phone.display}
+  </a>
+  <a class="btn btn-secondary" href={waHref(wa)} data-track="whatsapp" rel="noopener" target="_blank">
+    <Icon name="whatsapp" />
+    WhatsApp ile yazın
+  </a>
+</div>

@@ -1,0 +1,97 @@
+---
+import { company, telHref, waHref, routes, services, routePath, servicePath } from '../lib/site';
+const a = company.address;
+const addressLine = [a.street, a.district, a.city].filter(Boolean).join(', ');
+const year = new Date().getFullYear();
+const byName = [...routes].sort((x, y) => x.city.localeCompare(y.city, 'tr'));
+---
+
+<footer class="ftr">
+  <div class="wrap ftr-grid">
+    <section aria-label="İletişim bilgileri">
+      <p class="ftr-name"><strong>ATA</strong> Taşımacılık</p>
+      <p>
+        {addressLine}<br />
+        Telefon: <a href={telHref} data-track="call">{company.phone.display}</a><br />
+        <a href={waHref()} data-track="whatsapp" rel="noopener" target="_blank">WhatsApp</a>
+        {company.email && <><br /><a href={`mailto:${company.email}`}>{company.email}</a></>}
+      </p>
+      <p>{company.hours.label}</p>
+    </section>
+
+    <nav aria-label="Güzergahlar" class="ftr-routes">
+      <p class="ftr-h">Güzergahlar</p>
+      <ul>
+        <li><a href="/izmir-ici-frigorifik-nakliye/">İzmir içi nakliye</a></li>
+        {byName.map((r) => <li><a href={routePath(r)}>İzmir – {r.city}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-label="Hizmetler ve kurumsal">
+      <p class="ftr-h">Hizmetler</p>
+      <ul>
+        {services.map((s) => <li><a href={servicePath(s)}>{s.name}</a></li>)}
+      </ul>
+      <p class="ftr-h">Kurumsal</p>
+      <ul>
+        <li><a href="/hakkimizda/">Hakkımızda</a></li>
+        <li><a href="/iletisim/">İletişim</a></li>
+        <li><a href="/kvkk/">KVKK ve Çerez Politikası</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap ftr-base">© {year} {company.legalName}. Tüm hakları saklıdır.</div>
+</footer>
+
+<style>
+  .ftr {
+    background: var(--navy-2);
+    color: #c3ccd8;
+    font-size: 0.95rem;
+  }
+  .ftr a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .ftr a:hover {
+    text-decoration: underline;
+  }
+  .ftr-grid {
+    display: grid;
+    gap: 2rem;
+    padding-block: 2.75rem 1.5rem;
+  }
+  .ftr-name {
+    font-size: 1.35rem;
+    color: #fff;
+  }
+  .ftr-h {
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.6rem;
+  }
+  .ftr ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+  .ftr li {
+    margin: 0;
+    padding: 0.2rem 0;
+  }
+  .ftr-routes ul {
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+  .ftr-base {
+    padding-block: 1.1rem;
+    border-top: 1px solid #2a3b55;
+    color: #8e9bad;
+    font-size: 0.85rem;
+  }
+  @media (min-width: 900px) {
+    .ftr-grid {
+      grid-template-columns: 1fr 1.4fr 1fr;
+    }
+  }
+</style>

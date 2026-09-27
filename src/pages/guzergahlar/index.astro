@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RouteTable from '../../components/RouteTable.astro';
+import CallButtons from '../../components/CallButtons.astro';
+import { routes } from '../../lib/site';
+import { breadcrumbs } from '../../lib/schema';
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Güzergahlar', path: '/guzergahlar/' },
+];
+---
+
+<Base
+  title="Nakliye Güzergahlarımız | ATA Taşımacılık İzmir"
+  description={`İzmir'den ${routes.length} ile ve bu illerden İzmir'e frigorifik nakliye güzergahları: hizmet verdiğimiz iller ve sık taşınan yükler. Donuk, soğuk ve kuru gıda.`}
+  schema={[breadcrumbs(crumbs)]}
+>
+  <section class="section">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Güzergahlar</h1>
+      <p class="intro">
+        Merkezimiz İzmir'dir. Aşağıdaki {routes.length} ile düzenli sefer yapıyoruz. Her güzergahta iki yönde, İzmir'den
+        ile ve ilden İzmir'e yük taşıyoruz. Listede olmayan iller için de bizi arayabilirsiniz.
+      </p>
+      <p class="intro">
+        <strong>İzmir şehir içinde de çok çalışıyoruz</strong> — üreticiden depoya, depodan zincir markete günlük
+        teslimatlar dahil. <a href="/izmir-ici-frigorifik-nakliye/">İzmir içi nakliye sayfasını görün →</a>
+      </p>
+      <RouteTable />
+      <div class="cta"><CallButtons /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cta {
+    margin-top: 2.5rem;
+  }
+</style>

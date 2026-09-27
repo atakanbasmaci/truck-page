@@ -1,0 +1,52 @@
+---
+// Taslak metin: yayından önce hukuk danışmanı tarafından gözden geçirilmeli.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { company } from '../lib/site';
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'KVKK ve Çerezler', path: '/kvkk/' },
+];
+const a = company.address;
+const addressLine = [a.street, a.district, a.city].filter(Boolean).join(', ');
+---
+
+<Base
+  title="KVKK Aydınlatma Metni ve Çerez Politikası | ATA Taşımacılık"
+  description="ATA Taşımacılık web sitesi KVKK aydınlatma metni ve çerez politikası: hangi verileri, neden ve ne kadar süreyle işlediğimiz."
+>
+  <section class="section">
+    <div class="wrap prose">
+      <Breadcrumbs items={crumbs} />
+      <h1>KVKK Aydınlatma Metni ve Çerezler</h1>
+
+      <h2>Veri Sorumlusu</h2>
+      <p>{company.legalName}, {addressLine}. Telefon: {company.phone.display}.</p>
+
+      <h2>Hangi Verileri İşliyoruz?</h2>
+      <p>
+        Bu sitede form yoktur. Bizi aradığınızda telefon numaranızı, WhatsApp'tan yazdığınızda numaranızı ve mesajınızı;
+        teklif ve taşıma için bizimle paylaştığınız ad, firma, adres ve yük bilgilerini işliyoruz.
+      </p>
+
+      <h2>Neden İşliyoruz?</h2>
+      <p>
+        Fiyat teklifi vermek, taşımayı planlamak ve yapmak, yasal kayıt yükümlülüklerimizi yerine getirmek için. Hukuki
+        sebep: bir sözleşmenin kurulması veya ifası ile hukuki yükümlülüğün yerine getirilmesi (KVKK m.5/2-c ve ç).
+      </p>
+
+      <h2>Çerezler</h2>
+      <p>
+        Sitenin çalışması için zorunlu çerez kullanmıyoruz. Onay vermeniz hâlinde Google Analytics ve Google Ads
+        çerezleriyle sitenin nasıl kullanıldığını ve reklamlarımızın sonuç verip vermediğini ölçüyoruz. Onay vermezseniz bu
+        çerezler yazılmaz. Tercihinizi tarayıcınızın site verilerini silerek değiştirebilirsiniz.
+      </p>
+
+      <h2>Haklarınız</h2>
+      <p>
+        KVKK m.11 kapsamında verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini isteme ve itiraz
+        etme haklarına sahipsiniz. Başvurularınızı yukarıdaki adres ve telefon üzerinden bize iletebilirsiniz.
+      </p>
+    </div>
+  </section>
+</Base>

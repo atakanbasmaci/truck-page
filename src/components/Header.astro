@@ -1,0 +1,168 @@
+---
+import Icon from './Icon.astro';
+import { company, telHref } from '../lib/site';
+
+const nav = [
+  { href: '/', label: 'Ana Sayfa' },
+  { href: '/hizmetler/', label: 'Hizmetler' },
+  { href: '/guzergahlar/', label: 'Güzergahlar' },
+  { href: '/hakkimizda/', label: 'Hakkımızda' },
+  { href: '/iletisim/', label: 'İletişim' },
+];
+const path = Astro.url.pathname;
+const current = (href: string) => ((href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined);
+---
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <span>İzmir içi ve şehirler arası frigorifik nakliye</span>
+    <span>{company.hours.label}</span>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a href="/" class="logo" aria-label={`${company.name}, ana sayfa`}>
+      <strong>ATA</strong> Taşımacılık
+    </a>
+
+    <nav class="nav" aria-label="Ana menü">
+      {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
+    </nav>
+
+    <a class="hdr-tel" href={telHref} data-track="call">
+      <Icon name="phone" />
+      <span><small>Bizi arayın</small>{company.phone.display}</span>
+    </a>
+
+    <details class="menu">
+      <summary>Menü</summary>
+      <nav aria-label="Mobil menü">
+        {nav.map((n) => <a href={n.href} aria-current={current(n.href)}>{n.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .topbar {
+    display: none;
+    background: var(--navy-2);
+    color: #c9d2de;
+    font-size: 0.875rem;
+  }
+  .topbar-in {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 0.4rem;
+  }
+  .hdr {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hdr-in {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    min-height: 4rem;
+  }
+  .logo {
+    margin-right: auto;
+    font-size: 1.45rem;
+    font-weight: 400;
+    color: var(--navy);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .logo strong {
+    font-weight: 700;
+  }
+  .nav {
+    display: none;
+    gap: 1.6rem;
+  }
+  .nav a,
+  .menu nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .nav a:hover {
+    color: var(--navy);
+  }
+  .nav a[aria-current] {
+    color: var(--navy);
+    box-shadow: inset 0 -2px 0 var(--navy);
+    padding-bottom: 0.2rem;
+  }
+  .hdr-tel {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.1;
+  }
+  .hdr-tel small {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .hdr-tel :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .menu summary {
+    list-style: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--navy);
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 0.45rem 0.9rem;
+  }
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .menu[open] summary {
+    border-color: var(--navy);
+  }
+  .menu nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem var(--gutter) 0.75rem;
+  }
+  .menu nav a {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .menu nav a:last-child {
+    border-bottom: 0;
+  }
+  .menu nav a[aria-current] {
+    color: var(--navy);
+  }
+  @media (min-width: 960px) {
+    .topbar {
+      display: block;
+    }
+    .nav,
+    .hdr-tel {
+      display: flex;
+    }
+    .menu {
+      display: none;
+    }
+  }
+</style>

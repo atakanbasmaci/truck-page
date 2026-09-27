@@ -1,0 +1,272 @@
+---
+import Base from '../layouts/Base.astro';
+import CallButtons from '../components/CallButtons.astro';
+import Truck from '../components/Truck.astro';
+import RouteTable from '../components/RouteTable.astro';
+import Faq from '../components/Faq.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import { company, routes, services, servicePath, telHref, waHref } from '../lib/site';
+import { faqPage } from '../lib/schema';
+
+const faq = [
+  {
+    q: 'İzmir içinde de taşıma yapıyor musunuz?',
+    a: "Evet, İzmir şehir içinde çok yoğun çalışıyoruz: üreticiden depoya, depodan zincir markete ya da restorana günlük teslimatlar yapıyoruz. İzmir'in tüm ilçelerine gidiyoruz.",
+  },
+  {
+    q: 'Hangi illere nakliye yapıyorsunuz?',
+    a: `Düzenli olarak ${routes.length} ile çalışıyoruz: ${routes.map((r) => r.city).join(', ')}. Listede olmayan iller için de bizi arayabilirsiniz.`,
+  },
+  {
+    q: 'Sadece İzmir çıkışlı mı çalışıyorsunuz?',
+    a: "Hayır. İzmir'den illere yük götürdüğümüz gibi bu illerden İzmir'e de yük getiriyoruz. İki yönde de komple ve parsiyel taşıma yapıyoruz.",
+  },
+  {
+    q: 'Fiyat teklifi için hangi bilgiler gerekiyor?',
+    a: 'Yükleme ve teslim adresi, yükün cinsi ve saklama sıcaklığı, palet sayısı veya tonaj ve yükleme tarihi. Bu bilgilerle telefonda fiyat verebiliyoruz.',
+  },
+  {
+    q: 'Donuk ve soğuk ürünü aynı araçta taşıyor musunuz?',
+    a: 'Tek bölmeli araçta kasa tek sıcaklığa ayarlanır. İki farklı sıcaklık gerekiyorsa ayrı araç ya da uygun bir parsiyel plan öneriyoruz.',
+  },
+  {
+    q: 'Hangi sıcaklıklarda taşıma yapıyorsunuz?',
+    a: 'Donuk gıda için −18°C, soğuk ürünler için +2°C ile +8°C, kuru gıda için serin ve sabit bir sıcaklıkta; genel olarak −18°C ile +25°C arasında. Ürününüzün saklama sıcaklığını aramada belirtmeniz yeterli.',
+  },
+  {
+    q: 'Birkaç paletlik yük gönderebilir miyim?',
+    a: 'Evet. Aracı doldurmayan yükleri aynı sıcaklıktaki diğer yüklerle birleştirerek parsiyel olarak taşıyoruz.',
+  },
+];
+---
+
+<Base
+  title="İzmir Frigorifik Nakliye ve Soğuk Zincir | ATA Taşımacılık"
+  description={`İzmir merkezli frigorifik kamyonlarla donuk, soğuk ve kuru gıda nakliyesi. İzmir içi teslimat ve İzmir'den ${routes.length} ile, illerden İzmir'e komple ve parsiyel taşıma.`}
+  schema={[faqPage(faq)]}
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <h1>İzmir Frigorifik Nakliye</h1>
+        <p class="intro">
+          {company.name}, İzmir merkezli bir gıda nakliye firmasıdır. Frigorifik kamyonlarımızla donuk, soğuk ve kuru gıda
+          taşıyoruz. İzmir şehir içinde yoğun çalıştığımız gibi İzmir'den {routes.length} ile ve bu illerden İzmir'e
+          komple ve parsiyel sevkiyat da yapıyoruz.
+        </p>
+        <CallButtons />
+      </div>
+    </div>
+    <div class="hero-truck">
+      <div class="wrap">
+        <Truck class="truck" />
+      </div>
+    </div>
+    <div class="wrap">
+      <ul class="facts">
+        <li><strong>{company.fleet.count}</strong> frigorifik kamyon</li>
+        <li><strong>−18°C / +25°C</strong> sıcaklık aralığı</li>
+        <li><strong>{routes.length} il</strong> düzenli sefer</li>
+        <li><strong>7/24</strong> ulaşılabilir</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Hizmetlerimiz</h2>
+      <div class="services">
+        {
+          services.map((s) => (
+            <article class="svc">
+              <ServiceIcon slug={s.slug} class="svc-icon" />
+              <div>
+                <h3>
+                  <a href={servicePath(s)}>{s.h1}</a>
+                </h3>
+                {s.temp && <p class="temp">Kasa sıcaklığı: {s.temp.label}</p>}
+                <p>{s.summary}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2>İzmir İçi ve Şehirler Arası</h2>
+      <p class="intro">
+        İzmir şehir içinde çok yoğun çalışıyoruz; ayrıca merkezimiz İzmir'den aşağıdaki illere düzenli sefer
+        yapıyoruz, her güzergahta iki yönde.
+      </p>
+      <p class="izmir-ici-cta">
+        <a href="/izmir-ici-frigorifik-nakliye/">İzmir içi nakliye hakkında bilgi alın →</a>
+      </p>
+      <RouteTable />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols-2">
+      <div>
+        <h2>Filomuz</h2>
+        <table class="table">
+          <tbody>
+            <tr><th scope="row">Araç sayısı</th><td>{company.fleet.count} frigorifik kamyon</td></tr>
+            {
+              company.fleet.types.filter((t) => t.capacity).map((t) => (
+                <tr>
+                  <th scope="row">{t.name}</th>
+                  <td>{t.capacity}</td>
+                </tr>
+              ))
+            }
+            <tr><th scope="row">Sıcaklık aralığı</th><td>{company.fleet.tempRange}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>Belgelerimiz</h2>
+        <ul>
+          {company.documents.map((d) => <li>{d}</li>)}
+        </ul>
+        <p>
+          Araçlarımızda gıda dışında yük taşımıyoruz. Her yüklemeden önce kasa temizlenir ve yükün istediği sıcaklığa
+          soğutulur.
+        </p>
+        <p><a href="/hakkimizda/">Firmamız hakkında</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap contact">
+      <div>
+        <h2>Fiyat Teklifi Alın</h2>
+        <p>
+          Nakliye fiyatı mesafeye, araç tipine, sıcaklığa ve yükleme-teslim noktalarına göre değişir. Yükünüzün
+          bilgileriyle bizi arayın ya da WhatsApp'tan yazın.
+        </p>
+      </div>
+      <div class="contact-box">
+        <p class="phone"><a href={telHref} data-track="call">{company.phone.display}</a></p>
+        <p class="muted">{company.hours.label}</p>
+        <p><a href={waHref()} data-track="whatsapp" rel="noopener" target="_blank">WhatsApp ile yazın</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-top: clamp(2rem, 6vw, 3.5rem);
+  }
+  .hero-text {
+    max-width: 44rem;
+  }
+  .hero .intro {
+    margin-bottom: 1.5rem;
+  }
+  .hero-truck {
+    margin-top: 2rem;
+    background: linear-gradient(to bottom, transparent 55%, var(--alt) 55%);
+  }
+  .truck {
+    width: 100%;
+    max-width: 62rem;
+    margin-inline: auto;
+  }
+  .facts {
+    list-style: none;
+    padding: 1.25rem 0 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1.5rem;
+    color: var(--muted);
+  }
+  .facts li {
+    margin: 0;
+  }
+  .facts strong {
+    display: block;
+    color: var(--ink);
+    font-size: 1.15rem;
+  }
+  .izmir-ici-cta {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  .services {
+    display: grid;
+    gap: 0 3rem;
+  }
+  .svc {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    padding: 1.2rem 0 0.6rem;
+  }
+  .svc-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--navy);
+    margin-top: 0.1rem;
+  }
+  .svc h3 {
+    margin-bottom: 0.25rem;
+  }
+  .svc h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .svc h3 a:hover {
+    color: var(--navy);
+    text-decoration: underline;
+  }
+  .temp {
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+  .contact {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .phone {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+  }
+  .phone a {
+    text-decoration: none;
+  }
+  @media (min-width: 700px) {
+    .facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .services {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 900px) {
+    .contact {
+      grid-template-columns: 1.3fr 1fr;
+      gap: 4rem;
+    }
+    .contact-box {
+      border-left: 1px solid var(--line);
+      padding-left: 2.5rem;
+    }
+  }
+</style>

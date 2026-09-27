@@ -1,0 +1,155 @@
+---
+// Frigorifik kamyon (kasalı, tek şasi) yan görünüşü.
+// Renkler gri-beyaz; yazılar lacivert. Telefon ve web adresi firmadan gelir.
+import { company } from '../lib/site';
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+const host = new URL(company.site).hostname;
+
+const GY = 241; // tekerlek merkezi
+const wheels = [175, 243, 700];
+const seams = [90, 160, 230, 300, 370, 440, 510];
+const markers = [70, 200, 330, 460];
+const nuts = Array.from({ length: 8 }, (_, i) => {
+  const a = (i / 8) * Math.PI * 2;
+  return { dx: Math.cos(a) * 8, dy: Math.sin(a) * 8 };
+});
+const grille = [58, 66, 74, 82, 90, 98, 106];
+const font = "'Source Sans 3', 'Segoe UI', Arial, sans-serif";
+const navy = '#1c3150';
+const dark = '#2a2f35';
+const cab =
+  'M606 234 V84 Q606 66 624 66 H738 Q752 66 754 80 L764 196 Q766 212 764 234 H732.2 A33 33 0 0 0 667.8 234 Z';
+---
+
+<svg class={cls} viewBox="0 0 800 290" role="img" aria-label={`${company.name} frigorifik kamyon çizimi`}>
+  <defs>
+    <linearGradient id="kmy-box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"></stop>
+      <stop offset="1" stop-color="#eceef0"></stop>
+    </linearGradient>
+    <linearGradient id="kmy-cab" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfbfc"></stop>
+      <stop offset="1" stop-color="#d9dde1"></stop>
+    </linearGradient>
+    <linearGradient id="kmy-glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9d5de"></stop>
+      <stop offset="1" stop-color="#7f93a3"></stop>
+    </linearGradient>
+    <linearGradient id="kmy-metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6e9eb"></stop>
+      <stop offset="1" stop-color="#a3aaaf"></stop>
+    </linearGradient>
+    <clipPath id="kmy-cabclip"><path d={cab}></path></clipPath>
+  </defs>
+
+  <!-- zemin -->
+  <ellipse cx="400" cy="271" rx="380" ry="6" fill="#000" opacity="0.16"></ellipse>
+  <rect x="0" y="270" width="800" height="1.5" fill="#c4cad0"></rect>
+
+  <!-- şasi -->
+  <rect x="30" y="204" width="730" height="10" fill={dark}></rect>
+
+  <!-- yakıt deposu -->
+  <rect x="512" y="214" width="78" height="30" rx="10" fill="url(#kmy-metal)" stroke={dark} stroke-width="2"></rect>
+  <rect x="530" y="212" width="4" height="34" fill={dark}></rect>
+  <rect x="568" y="212" width="4" height="34" fill={dark}></rect>
+
+  <!-- yan koruma -->
+  <g fill="#b7bdc2" stroke={dark} stroke-width="1.5">
+    <rect x="290" y="219" width="210" height="6"></rect>
+    <rect x="290" y="233" width="210" height="6"></rect>
+  </g>
+  <rect x="310" y="212" width="4" height="29" fill={dark}></rect>
+  <rect x="480" y="212" width="4" height="29" fill={dark}></rect>
+
+  <!-- arka tampon, çamurluk lastiği, çamurluk -->
+  <rect x="16" y="228" width="46" height="9" fill="#9aa1a7" stroke={dark} stroke-width="1.5"></rect>
+  <rect x="36" y="212" width="4" height="18" fill={dark}></rect>
+  <rect x="130" y="212" width="6" height="48" fill={dark}></rect>
+  <path d="M140 214 V205 Q140 200 145 200 H273 Q278 200 278 205 V214" fill="#3a4047"></path>
+
+  <!-- kasa -->
+  <rect x="20" y="40" width="540" height="156" rx="5" fill="url(#kmy-box)"></rect>
+  <g stroke="#e1e4e7" stroke-width="1.5">
+    {seams.map((x) => <line x1={x} y1="50" x2={x} y2="186" />)}
+  </g>
+  <rect x="21" y="41" width="538" height="8" fill="#cfd4d8"></rect>
+  <rect x="21" y="186" width="538" height="9" fill="#c3c9ce"></rect>
+  <rect x="21" y="41" width="8" height="154" fill="#dde1e4"></rect>
+  <rect x="551" y="41" width="8" height="154" fill="#dde1e4"></rect>
+  <rect x="20" y="40" width="540" height="156" rx="5" fill="none" stroke={dark} stroke-width="2.5"></rect>
+
+  <!-- kasa yazıları -->
+  <text x="50" y="106" font-family={font} font-weight="700" font-size="50" fill={navy} letter-spacing="-0.5">ATA TAŞIMACILIK</text>
+  <text x="52" y="133" font-family={font} font-weight="600" font-size="17" fill="#5a6470">Frigorifik Nakliye · Soğuk Zincir</text>
+  <rect x="50" y="148" width="330" height="2" fill={navy}></rect>
+  <text x="52" y="170" font-family={font} font-weight="600" font-size="15" fill={navy}>{company.phone.display}   ·   {host}</text>
+  <!-- sıcaklık etiketi -->
+  <g transform="translate(440 88)">
+    <rect x="0" y="0" width="92" height="52" rx="4" fill="#fff" stroke="#b9c0c6" stroke-width="1.5"></rect>
+    <text x="46" y="23" text-anchor="middle" font-family={font} font-weight="700" font-size="16" fill={navy}>−18 / +25°C</text>
+    <text x="46" y="41" text-anchor="middle" font-family={font} font-weight="600" font-size="11" fill="#6b737a">FRİGORİFİK</text>
+  </g>
+
+  <!-- yan ışıklar ve stop -->
+  <g fill="#f29a05" stroke={dark} stroke-width="1">
+    {markers.map((x) => <rect x={x} y="198" width="8" height="4" rx="1" />)}
+  </g>
+  <rect x="20" y="198" width="14" height="7" fill="#c62f2f" stroke={dark} stroke-width="1"></rect>
+
+  <!-- soğutma ünitesi -->
+  <rect x="558" y="48" width="30" height="70" rx="3" fill="#e9ecee" stroke={dark} stroke-width="2"></rect>
+  <g stroke="#7b848b" stroke-width="2" stroke-linecap="round">
+    {grille.map((y) => <line x1="565" y1={y} x2="581" y2={y} />)}
+  </g>
+
+  <!-- rüzgarlık -->
+  <path d="M742 68 C716 52 680 45 632 43 H612 V68 Z" fill="#dfe3e6" stroke={dark} stroke-width="2" stroke-linejoin="round"></path>
+
+  <!-- kabin -->
+  <path d={cab} fill="url(#kmy-cab)"></path>
+  <g clip-path="url(#kmy-cabclip)">
+    <rect x="596" y="198" width="180" height="50" fill="#4a5259"></rect>
+    <rect x="596" y="194" width="180" height="4" fill={navy}></rect>
+    <path d="M750 70 L763 200 L778 200 L764 70 Z" fill="#000" opacity="0.12"></path>
+  </g>
+  <path d={cab} fill="none" stroke={dark} stroke-width="2.5" stroke-linejoin="round"></path>
+  <!-- cam -->
+  <path d="M664 80 H742 Q749 80 750 88 L756 138 H664 Z" fill="url(#kmy-glass)" stroke={dark} stroke-width="2"></path>
+  <path d="M688 80 L677 138 H686 L697 80 Z" fill="#fff" opacity="0.35"></path>
+  <!-- kapı -->
+  <path d="M656 72 V192" stroke={dark} stroke-width="1.8"></path>
+  <rect x="670" y="150" width="16" height="4" rx="2" fill={dark}></rect>
+  <rect x="644" y="94" width="3.5" height="66" rx="1.5" fill="#aab1b7" stroke={dark} stroke-width="1"></rect>
+  <text x="710" y="180" text-anchor="middle" font-family={font} font-weight="700" font-size="16" fill={navy}>ATA</text>
+  <!-- basamaklar -->
+  <rect x="618" y="214" width="32" height="4" fill="#aab1b7"></rect>
+  <rect x="618" y="228" width="32" height="4" fill="#aab1b7"></rect>
+  <!-- güneşlik, ayna -->
+  <path d="M752 72 L774 76 V81 L754 81 Z" fill={dark}></path>
+  <path d="M756 98 L776 94" stroke={dark} stroke-width="2.5" stroke-linecap="round"></path>
+  <rect x="773" y="84" width="8" height="38" rx="2" fill={dark}></rect>
+  <!-- sinyal, far, tampon -->
+  <rect x="761" y="164" width="6" height="6" rx="1" fill="#f29a05" stroke={dark} stroke-width="1"></rect>
+  <rect x="754" y="174" width="14" height="11" rx="2" fill="#f6f3e2" stroke={dark} stroke-width="1.5"></rect>
+  <rect x="748" y="206" width="26" height="26" rx="3" fill="#3a4047" stroke={dark} stroke-width="1.5"></rect>
+
+  <!-- tekerlekler -->
+  {
+    wheels.map((cx) => (
+      <g>
+        <circle cx={cx} cy={GY} r="29" fill="#1f2327" />
+        <circle cx={cx} cy={GY} r="25" fill="none" stroke="#353b41" stroke-width="1.5" />
+        <circle cx={cx} cy={GY} r="16" fill="#c9ced2" stroke={dark} stroke-width="1.2" />
+        <circle cx={cx} cy={GY} r="11" fill="#9da4a9" />
+        <circle cx={cx} cy={GY} r="5" fill="#3a4047" />
+        {nuts.map((n) => (
+          <circle cx={cx + n.dx} cy={GY + n.dy} r="1.4" fill="#3a4047" />
+        ))}
+      </g>
+    ))
+  }
+</svg>

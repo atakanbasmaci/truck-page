@@ -1,0 +1,42 @@
+---
+interface Props {
+  items: { name: string; path: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label="Sayfa yolu" class="bc">
+  <ol>
+    {
+      items.map((it, i) =>
+        i < items.length - 1 ? (
+          <li>
+            <a href={it.path}>{it.name}</a>
+          </li>
+        ) : (
+          <li aria-current="page">{it.name}</li>
+        ),
+      )
+    }
+  </ol>
+</nav>
+
+<style>
+  .bc ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.5rem;
+    padding: 0;
+    margin: 0 0 1.4rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .bc li + li::before {
+    content: '›';
+    margin-right: 0.5rem;
+  }
+  .bc a {
+    color: var(--muted);
+  }
+</style>
