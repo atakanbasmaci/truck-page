@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import Truck from '../components/Truck.astro';
 import CallButtons from '../components/CallButtons.astro';
 import { company, routes } from '../lib/site';
 import { breadcrumbs } from '../lib/schema';
@@ -36,8 +35,6 @@ const crumbs = [
         </p>
       </div>
 
-      <Truck class="truck" />
-
       <div class="cols-2">
         <div>
           <h2>Filo</h2>
@@ -68,11 +65,6 @@ const crumbs = [
 </Base>
 
 <style>
-  .truck {
-    width: 100%;
-    max-width: 56rem;
-    margin: 2.5rem 0 3rem;
-  }
   .cta {
     margin-top: 2.5rem;
   }

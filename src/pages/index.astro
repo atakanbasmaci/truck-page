@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import CallButtons from '../components/CallButtons.astro';
-import Truck from '../components/Truck.astro';
 import RouteTable from '../components/RouteTable.astro';
 import Faq from '../components/Faq.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
@@ -37,25 +36,20 @@ const faq = [
 ---
 
 <Base
-  title="İzmir Frigorifik Nakliye ve Soğuk Zincir | ATA Taşımacılık"
+  title="İzmir Nakliye | Frigorifik Taşıma ve Soğuk Zincir | ATA Taşımacılık"
   description={`İzmir merkezli frigorifik kamyonlarla donuk, soğuk ve kuru gıda nakliyesi. İzmir içi teslimat ve İzmir'den ${routes.length} ile, illerden İzmir'e nakliye.`}
   schema={[faqPage(faq)]}
 >
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <h1>İzmir Frigorifik Nakliye</h1>
+        <h1>İzmir Nakliye | Frigorifik Taşıma</h1>
         <p class="intro">
           {company.name}, İzmir merkezli bir nakliye firmasıdır. Frigorifik kamyonlarımızla donuk, soğuk ve kuru gıda
           taşıyoruz. İzmir şehir içinde yoğun çalıştığımız gibi İzmir'den {routes.length} ile ve bu illerden İzmir'e
           nakliye de yapıyoruz.
         </p>
         <CallButtons />
-      </div>
-    </div>
-    <div class="hero-truck">
-      <div class="wrap">
-        <Truck class="truck" />
       </div>
     </div>
     <div class="wrap">
@@ -170,15 +164,6 @@ const faq = [
   }
   .hero .intro {
     margin-bottom: 1.5rem;
-  }
-  .hero-truck {
-    margin-top: 2rem;
-    background: linear-gradient(to bottom, transparent 55%, var(--alt) 55%);
-  }
-  .truck {
-    width: 100%;
-    max-width: 62rem;
-    margin-inline: auto;
   }
   .facts {
     list-style: none;
