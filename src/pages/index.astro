@@ -19,7 +19,7 @@ const faq = [
   },
   {
     q: 'Sadece İzmir çıkışlı mı çalışıyorsunuz?',
-    a: "Hayır. İzmir'den illere yük götürdüğümüz gibi bu illerden İzmir'e de yük getiriyoruz. İki yönde de komple ve parsiyel taşıma yapıyoruz.",
+    a: "Hayır. İzmir'den illere yük götürdüğümüz gibi bu illerden İzmir'e de yük getiriyoruz. İki yönde de taşıma yapıyoruz.",
   },
   {
     q: 'Fiyat teklifi için hangi bilgiler gerekiyor?',
@@ -27,22 +27,18 @@ const faq = [
   },
   {
     q: 'Donuk ve soğuk ürünü aynı araçta taşıyor musunuz?',
-    a: 'Tek bölmeli araçta kasa tek sıcaklığa ayarlanır. İki farklı sıcaklık gerekiyorsa ayrı araç ya da uygun bir parsiyel plan öneriyoruz.',
+    a: 'Tek bölmeli araçta kasa tek sıcaklığa ayarlanır. İki farklı sıcaklık gerekiyorsa ayrı araç öneriyoruz.',
   },
   {
     q: 'Hangi sıcaklıklarda taşıma yapıyorsunuz?',
     a: 'Donuk gıda için −18°C, soğuk ürünler için +2°C ile +8°C, kuru gıda için serin ve sabit bir sıcaklıkta; genel olarak −18°C ile +25°C arasında. Ürününüzün saklama sıcaklığını aramada belirtmeniz yeterli.',
-  },
-  {
-    q: 'Birkaç paletlik yük gönderebilir miyim?',
-    a: 'Evet. Aracı doldurmayan yükleri aynı sıcaklıktaki diğer yüklerle birleştirerek parsiyel olarak taşıyoruz.',
   },
 ];
 ---
 
 <Base
   title="İzmir Frigorifik Nakliye ve Soğuk Zincir | ATA Taşımacılık"
-  description={`İzmir merkezli frigorifik kamyonlarla donuk, soğuk ve kuru gıda nakliyesi. İzmir içi teslimat ve İzmir'den ${routes.length} ile, illerden İzmir'e komple ve parsiyel taşıma.`}
+  description={`İzmir merkezli frigorifik kamyonlarla donuk, soğuk ve kuru gıda nakliyesi. İzmir içi teslimat ve İzmir'den ${routes.length} ile, illerden İzmir'e nakliye.`}
   schema={[faqPage(faq)]}
 >
   <section class="hero">
@@ -50,9 +46,9 @@ const faq = [
       <div class="hero-text">
         <h1>İzmir Frigorifik Nakliye</h1>
         <p class="intro">
-          {company.name}, İzmir merkezli bir gıda nakliye firmasıdır. Frigorifik kamyonlarımızla donuk, soğuk ve kuru gıda
+          {company.name}, İzmir merkezli bir nakliye firmasıdır. Frigorifik kamyonlarımızla donuk, soğuk ve kuru gıda
           taşıyoruz. İzmir şehir içinde yoğun çalıştığımız gibi İzmir'den {routes.length} ile ve bu illerden İzmir'e
-          komple ve parsiyel sevkiyat da yapıyoruz.
+          nakliye de yapıyoruz.
         </p>
         <CallButtons />
       </div>

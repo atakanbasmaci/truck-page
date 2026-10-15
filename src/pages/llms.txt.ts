@@ -26,7 +26,7 @@ export const GET: APIRoute = () => {
   const lines = [
     `# ${company.name}`,
     '',
-    `> İzmir merkezli frigorifik nakliye firması. Frigorifik kamyonlarla donuk, soğuk ve kuru gıda taşımacılığı yapar. İzmir şehir içinde yoğun çalışır; ayrıca İzmir'den ${routes.length} ile ve bu illerden İzmir'e komple ve parsiyel sevkiyat yapar.`,
+    `> İzmir merkezli frigorifik nakliye firması. Frigorifik kamyonlarla donuk, soğuk ve kuru gıda taşımacılığı yapar. İzmir şehir içinde yoğun çalışır; ayrıca İzmir'den ${routes.length} ile ve bu illerden İzmir'e nakliye yapar.`,
     '',
     '## Temel bilgiler',
     '',

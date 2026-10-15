@@ -16,24 +16,20 @@ const path = routePath(r);
 const near = nearby(r, 3);
 
 const title = `İzmir ${r.city} Frigorifik Nakliye | ATA Taşımacılık`;
-const description = `İzmir'den ${r.dat}, ${r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıma. Komple ve parsiyel araç seçenekleri.`;
+const description = `İzmir'den ${r.dat}, ${r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıma. Komple araç seçeneği.`;
 
 const faq = [
   {
     q: `${r.city} için hangi araçlar müsait?`,
-    a: `Yükünüzün büyüklüğüne göre komple araç ya da parsiyel taşıma öneriyoruz. Uygun aracı ve tarihi telefonda birlikte belirliyoruz.`,
+    a: `Yükünüzün büyüklüğüne göre uygun aracı öneriyoruz. Aracı ve tarihi telefonda birlikte belirliyoruz.`,
   },
   {
     q: `${r.abl} İzmir'e yük taşıyor musunuz?`,
     a: `Evet. ${r.abl} İzmir'e ${r.inLoads.slice(0, 3).map((l) => l.toLocaleLowerCase('tr')).join(', ')} gibi yükler taşıyoruz. Dönüş seferine denk gelen yüklerde fiyat avantajı olabilir.`,
   },
   {
-    q: `${r.city} için parsiyel yük gönderebilir miyim?`,
-    a: 'Evet. Aracı doldurmayan yükleri aynı sıcaklıktaki diğer yüklerle birleştirerek taşıyoruz. Parsiyel sevkiyatta yükleme günü hattın doluluğuna göre belirlenir.',
-  },
-  {
     q: 'Fiyat nasıl belirleniyor?',
-    a: 'Araç tipine (komple veya parsiyel), sıcaklığa, palet sayısına ve yükleme-teslim noktalarına göre. Yükünüzün bilgileriyle arayın, fiyatı telefonda bildirelim.',
+    a: 'Yükün cinsine, sıcaklığa, palet sayısına veya tonaja ve yükleme-teslim noktalarına göre. Yükünüzün bilgileriyle arayın, fiyatı telefonda bildirelim.',
   },
 ];
 
@@ -69,8 +65,8 @@ const wa = `Merhaba, İzmir – ${r.city} arası nakliye için fiyat almak istiy
         <div>
           <h1>İzmir – {r.city} Frigorifik Nakliye</h1>
           <p class="intro">
-            İzmir'den {r.dat} ve {r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıyoruz. Komple araç ve
-            parsiyel taşıma seçenekleri mevcuttur.
+            İzmir'den {r.dat} ve {r.abl} İzmir'e frigorifik kamyonla donuk, soğuk ve kuru gıda taşıyoruz. Komple araçla
+            taşıma yapıyoruz.
           </p>
           <CallButtons wa={wa} />
         </div>
@@ -79,7 +75,7 @@ const wa = `Merhaba, İzmir – ${r.city} arası nakliye için fiyat almak istiy
           <tbody>
             <tr><th scope="row">Güzergah</th><td>{r.road}</td></tr>
             <tr><th scope="row">Sıcaklık</th><td>{company.fleet.tempRange}</td></tr>
-            <tr><th scope="row">Taşıma</th><td>Komple araç veya parsiyel</td></tr>
+            <tr><th scope="row">Taşıma</th><td>Komple araç</td></tr>
           </tbody>
         </table>
       </div>

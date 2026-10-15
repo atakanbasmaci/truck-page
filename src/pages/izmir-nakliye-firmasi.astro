@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallButtons from '../components/CallButtons.astro';
+import RouteTable from '../components/RouteTable.astro';
+import Faq from '../components/Faq.astro';
+import { routes, services, servicePath, company } from '../lib/site';
+import { service, faqPage, breadcrumbs } from '../lib/schema';
+
+const path = '/izmir-nakliye-firmasi/';
+const title = 'İzmir Nakliye Firması | Yük Taşımacılığı – ATA Taşımacılık';
+const description = `İzmir merkezli nakliye firması: İzmir içi ve ${routes.length} ile yük taşımacılığı. Gıda yüklerinde frigorifik kamyon, K1 belgeli, sigortalı. Hemen arayın.`;
+const wa = 'Merhaba, İzmir içi / şehirler arası nakliye için fiyat almak istiyorum.';
+
+const faq = [
+  {
+    q: 'Hangi tür yükleri taşıyorsunuz?',
+    a: 'Gıda yüklerini taşıyoruz: donuk, soğuk ve kuru gıda. Araçlarımızda gıda dışında yük taşımıyoruz; ev eşyası, mobilya ya da ofis taşıması yapmıyoruz.',
+  },
+  {
+    q: 'İzmir içinde nakliye yapıyor musunuz?',
+    a: "Evet, İzmir şehir içinde çok yoğun çalışıyoruz. İzmir'in tüm ilçelerine gidiyoruz; üreticiden depoya, depodan market ya da restorana teslimat yapıyoruz.",
+  },
+  {
+    q: 'Hangi illere nakliye yapıyorsunuz?',
+    a: `Düzenli olarak ${routes.length} ile çalışıyoruz: ${routes.map((r) => r.city).join(', ')}. İki yönde de taşıma yapıyoruz. Listede olmayan iller için de bizi arayabilirsiniz.`,
+  },
+  {
+    q: 'Nakliye fiyatı nasıl belirleniyor?',
+    a: 'Yükleme ve teslim adresi, yükün cinsi ve sıcaklığı, palet sayısı veya tonaj ve tarihe göre. Bu bilgilerle telefonda fiyat verebiliyoruz.',
+  },
+  {
+    q: 'Belgeleriniz ve sigortanız var mı?',
+    a: `Evet. ${company.documents.join(' ve ')} ile çalışıyoruz.`,
+  },
+];
+
+const crumbs = [
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'İzmir Nakliye Firması', path },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  wa={wa}
+  schema={[
+    service({
+      name: 'İzmir nakliye ve yük taşımacılığı',
+      description,
+      path,
+      areas: ['İzmir', ...routes.map((r) => r.city)],
+      serviceType: 'Nakliye ve yük taşımacılığı',
+    }),
+    faqPage(faq),
+    breadcrumbs(crumbs),
+  ]}
+>
+  <section class="section top">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="top-grid">
+        <div>
+          <h1>İzmir Nakliye Firması</h1>
+          <p class="intro">
+            {company.name}, İzmir merkezli bir nakliye firmasıdır. İzmir şehir içinde ve İzmir'den{' '}
+            {routes.length} ile yük taşıyoruz. Gıda yüklerinde frigorifik kamyonlarımızla donuk, soğuk ve kuru
+            gıdayı istenen sıcaklıkta taşıyoruz.
+          </p>
+          <CallButtons wa={wa} />
+        </div>
+        <table class="table facts">
+          <caption class="visually-hidden">Nakliye bilgileri</caption>
+          <tbody>
+            <tr><th scope="row">Merkez</th><td>İzmir, Gaziemir</td></tr>
+            <tr><th scope="row">Hizmet bölgesi</th><td>İzmir ve {routes.length} il</td></tr>
+            <tr><th scope="row">Araç</th><td>{company.fleet.count} frigorifik kamyon</td></tr>
+            <tr><th scope="row">Belgeler</th><td>{company.documents.join(', ')}</td></tr>
+            <tr><th scope="row">Ulaşım</th><td>{company.hours.label}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap prose">
+      <h2>Ne Taşıyoruz?</h2>
+      <p>
+        Yalnızca gıda yükü taşıyoruz. Dondurulmuş et, tavuk ve deniz ürünü; süt ürünleri, taze et ve sebze-meyve;
+        un, bakliyat, konserve ve içecek gibi kuru gıdalar araçlarımızda istenen sıcaklıkta taşınır. Ev eşyası,
+        mobilya ve ofis taşıması yapmıyoruz.
+      </p>
+      <ul>
+        {services.map((s) => <li><a href={servicePath(s)}>{s.h1}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>İzmir'den ve İzmir'e Güzergahlar</h2>
+      <p class="intro">
+        İzmir çıkışlı ve varışlı seferlerimiz her güzergahta iki yönde çalışır.
+        <a href="/izmir-ici-frigorifik-nakliye/">İzmir içi nakliye</a> için de arayabilirsiniz.
+      </p>
+      <RouteTable />
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <Faq items={faq} heading="Nakliye Hakkında Sık Sorulan Sorular" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Fiyat Teklifi</h2>
+      <p>
+        Yükleme ve teslim adresini, yükün cinsini, sıcaklığını ve palet sayısını söylemeniz yeterli. Telefonda fiyat
+        veriyoruz.
+      </p>
+      <CallButtons wa={wa} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top {
+    padding-top: 1.5rem;
+  }
+  .top-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+  .facts th {
+    width: 36%;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .facts td {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  @media (min-width: 900px) {
+    .top-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+</style>

@@ -56,7 +56,7 @@ export const routes: Route[] = [
   {
     slug: 'usak', city: 'Uşak', dat: "Uşak'a", abl: "Uşak'tan", region: 'Ege',
     km: 210, road: 'D300, Salihli üzerinden', lat: 38.68, lng: 29.41,
-    outbound: "Uşak, Ankara seferleriyle aynı yol üzerinde. Bu yüzden Uşak'a giden parsiyel yükleri bu seferlerle kolayca birleştiriyoruz.",
+    outbound: "Uşak, Ankara seferleriyle aynı yol üzerinde. Bu yüzden Uşak'a giden yükleri bu seferlerle birlikte planlıyoruz.",
     inbound: "Uşak'tan İzmir'e süt ürünleri, et ürünleri ve tarhana gibi yöresel kuru gıda taşıyoruz.",
     outLoads: ['Su ürünleri', 'Donuk ürün', 'Kuru gıda'],
     inLoads: ['Süt ürünleri', 'Et ürünleri', 'Tarhana ve yöresel kuru gıda'],
@@ -92,7 +92,7 @@ export const routes: Route[] = [
   {
     slug: 'kutahya', city: 'Kütahya', dat: "Kütahya'ya", abl: "Kütahya'dan", region: 'Ege',
     km: 340, road: 'D300, Uşak üzerinden', lat: 39.42, lng: 29.98,
-    outbound: "Kütahya'ya giden yükler Uşak ve Ankara hattıyla aynı koridordan gidiyor. Bu sayede parsiyel yükleri diğer seferlerle birleştirebiliyoruz.",
+    outbound: "Kütahya'ya giden yükler Uşak ve Ankara hattıyla aynı koridordan gidiyor. Bu sayede yükleri diğer seferlerle birlikte planlayabiliyoruz.",
     inbound: "Kütahya'dan İzmir'e süt ürünleri, et ürünleri, bölgenin meyve ve sebzesini taşıyoruz.",
     outLoads: ['Su ürünleri', 'Dondurulmuş sebze', 'Zeytin ve zeytinyağı'],
     inLoads: ['Süt ürünleri', 'Et ürünleri', 'Meyve ve sebze'],
@@ -101,7 +101,7 @@ export const routes: Route[] = [
   {
     slug: 'afyonkarahisar', city: 'Afyonkarahisar', dat: "Afyonkarahisar'a", abl: "Afyonkarahisar'dan", region: 'Ege',
     km: 330, road: 'D300, Uşak üzerinden', lat: 38.76, lng: 30.54,
-    outbound: "Afyonkarahisar, İzmir–Ankara hattının üzerinde. Bu nedenle parsiyel yük birleştirmeye en uygun illerimizden biri; küçük yükler de düzenli seferlerle gidiyor.",
+    outbound: "Afyonkarahisar, İzmir–Ankara hattının üzerinde. Bu nedenle düzenli seferlerle en sık gittiğimiz illerden biri.",
     inbound: "Afyonkarahisar'dan İzmir'e sucuk, kaymak, süt ürünleri ve sezonunda kiraz ve vişne taşıyoruz.",
     outLoads: ['Su ürünleri', 'Zeytinyağı', 'Dondurulmuş sebze'],
     inLoads: ['Sucuk ve et ürünleri', 'Kaymak ve süt ürünleri', 'Kiraz ve vişne'],

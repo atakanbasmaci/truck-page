@@ -23,6 +23,7 @@ const byName = [...routes].sort((x, y) => x.city.localeCompare(y.city, 'tr'));
       <p class="ftr-h">Güzergahlar</p>
       <ul>
         <li><a href="/izmir-ici-frigorifik-nakliye/">İzmir içi nakliye</a></li>
+        <li><a href="/izmir-nakliye-firmasi/">İzmir nakliye firması</a></li>
         {byName.map((r) => <li><a href={routePath(r)}>İzmir – {r.city}</a></li>)}
       </ul>
     </nav>

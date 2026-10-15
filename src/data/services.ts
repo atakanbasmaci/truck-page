@@ -10,7 +10,7 @@ export interface Service {
   h1: string;
   title: string;
   description: string;
-  /** Sıcaklık aralığı; parsiyel/komple için yok */
+  /** Sıcaklık aralığı; komple araç hizmeti için yok */
   temp?: { min: number; max: number; label: string };
   intro: string;
   /** Ana sayfadaki kısa özet */
@@ -54,7 +54,7 @@ export const services: Service[] = [
       },
       {
         q: 'Donuk ve soğuk yükü aynı araçta taşıyabilir misiniz?',
-        a: 'Tek bölmeli araçta kasa tek sıcaklığa ayarlanır. İki farklı sıcaklık gerekiyorsa ayrı araç ya da uygun bir parsiyel plan öneriyoruz.',
+        a: 'Tek bölmeli araçta kasa tek sıcaklığa ayarlanır. İki farklı sıcaklık gerekiyorsa ayrı araç öneriyoruz.',
       },
     ],
     loadWord: 'donuk',
@@ -66,7 +66,7 @@ export const services: Service[] = [
     h1: 'Soğuk Zincir Taşımacılığı',
     title: 'Soğuk Zincir Taşımacılığı İzmir, +2°C / +8°C | ATA Taşımacılık',
     description:
-      'İzmir merkezli soğuk zincir nakliye: süt ürünleri, taze et, şarküteri ve sebze-meyve için +2°C / +8°C frigorifik kamyon. Komple ve parsiyel taşıma.',
+      'İzmir merkezli soğuk zincir nakliye: süt ürünleri, taze et, şarküteri ve sebze-meyve için +2°C / +8°C frigorifik kamyon.',
     temp: { min: 2, max: 8, label: '+2°C / +8°C' },
     intro:
       'Taze ürün donmamalı ama ısınmamalı da. Süt ürünü, taze et ve şarküteri için kasayı dar bir aralıkta tutuyoruz; sebze ve meyvede ürünün istediği serinliğe göre ayar yapıyoruz.',
@@ -89,8 +89,8 @@ export const services: Service[] = [
         a: 'Evet. Her ürünün ideal sıcaklığı farklıdır: yapraklı sebze çok serin, muz ve narenciye daha ılık ister. Ayarı ürüne göre yapıyoruz.',
       },
       {
-        q: 'Süt ürünlerini parsiyel gönderebilir miyim?',
-        a: 'Aynı sıcaklık aralığında başka yük varsa evet. Parsiyel sevkiyatta yükleme günü hattın doluluğuna göre belirlenir.',
+        q: 'Süt ürünlerini hangi sıcaklıkta taşıyorsunuz?',
+        a: 'Süt ürünleri +2°C ile +8°C arasında taşınır. Kasa yüklemeden önce bu aralığa getirilir.',
       },
     ],
     loadWord: 'soğuk',
@@ -128,31 +128,30 @@ export const services: Service[] = [
     loadWord: 'kuru gıda',
   },
   {
-    slug: 'parsiyel-ve-komple-arac',
-    summary: 'Birkaç paletlik yükler parsiyel, büyük veya acil yükler komple araçla taşınır. Ara teslim planlanabilir.',
-    name: 'Parsiyel / Komple',
-    h1: 'Parsiyel ve Komple Araç Taşımacılığı',
-    title: 'Parsiyel ve Komple Araç Taşımacılığı İzmir | ATA Taşımacılık',
+    slug: 'komple-arac-tasimaciligi',
+    summary: 'Büyük veya acil yükler komple araçla taşınır. Ara teslim planlanabilir.',
+    name: 'Komple Araç',
+    h1: 'Komple Araç Taşımacılığı',
+    title: 'Komple Araç Taşımacılığı İzmir | ATA Taşımacılık',
     description:
-      'İzmir çıkışlı ve varışlı parsiyel ve komple frigorifik taşıma. Birkaç paletlik yükten kamyon dolusu yüke kadar donuk, soğuk ve kuru gıda nakliyesi.',
+      'İzmir çıkışlı ve varışlı komple araç frigorifik taşıma. Kamyon dolusu yükten acil sevkiyata kadar donuk, soğuk ve kuru gıda nakliyesi.',
     intro:
-      'Yükünüz aracı doldurmuyorsa tam araç parası ödemeniz gerekmez. Aynı sıcaklıktaki yükleri aynı araçta birleştiriyoruz. Yükünüz büyükse ya da acilse aracı yalnızca size ayırıyoruz.',
-    products: ['Birkaç paletten kamyon dolusu yüke kadar', 'Donuk, soğuk ve kuru gıda', 'Tek adres ya da çoklu teslim'],
+      'Yükünüz büyükse ya da acilse aracı yalnızca size ayırıyoruz. Yükleme saatini ve teslim adresini siz belirlersiniz.',
+    products: ['Kamyon dolusu yük', 'Donuk, soğuk ve kuru gıda', 'Tek adres ya da çoklu teslim'],
     points: [
-      { title: 'Parsiyel', text: 'Birkaç paletlik yük, aynı sıcaklık aralığındaki diğer yüklerle birleştirilir. Yükleme günü hattın doluluğuna göre belirlenir.' },
       { title: 'Komple araç', text: 'Araç yalnızca sizin yükünüzü taşır. Yükleme saatini ve teslim adresini siz belirlersiniz.' },
       { title: 'Ara teslim', text: 'Yol üzerindeki birden fazla adrese teslim aynı seferde planlanabilir.' },
     ],
     faq: [
       {
-        q: 'Parsiyel fiyat nasıl hesaplanıyor?',
-        a: 'Palet sayısı ya da ağırlık, sıcaklık aralığı, mesafe ve yükleme-teslim noktalarına göre. Arayın ya da WhatsApp’tan yazın, hızlıca teklif verelim.',
+        q: 'Komple araç fiyatı nasıl hesaplanıyor?',
+        a: 'Mesafe, sıcaklık aralığı, yükün ağırlığı ve yükleme-teslim noktalarına göre. Arayın ya da WhatsApp’tan yazın, hızlıca teklif verelim.',
       },
       {
         q: 'Komple araçta hangi araç tipleri var?',
         a: 'Filomuz frigorifik kamyonlardan oluşuyor. Yükünüzün palet sayısı ve ağırlığına göre uygun aracı birlikte belirliyoruz.',
       },
     ],
-    loadWord: 'parsiyel',
+    loadWord: 'komple araç',
   },
 ];

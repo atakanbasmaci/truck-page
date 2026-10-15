@@ -9,7 +9,7 @@ import { service, faqPage, breadcrumbs } from '../lib/schema';
 const path = '/izmir-ici-frigorifik-nakliye/';
 const title = 'İzmir İçi Frigorifik Nakliye | ATA Taşımacılık';
 const description =
-  'İzmir şehir içi frigorifik nakliye: donuk, soğuk ve kuru gıda taşımacılığı. Merkez ve çevre ilçelere aynı gün teslim, komple ve parsiyel araç.';
+  'İzmir şehir içi frigorifik nakliye: donuk, soğuk ve kuru gıda taşımacılığı. Merkez ve çevre ilçelere aynı gün teslim.';
 
 const merkez = ['Konak', 'Bornova', 'Karşıyaka', 'Bayraklı', 'Çiğli', 'Gaziemir', 'Buca', 'Balçova', 'Narlıdere', 'Güzelbahçe'];
 const yakinCevre = ['Menemen', 'Kemalpaşa', 'Torbalı', 'Menderes', 'Urla', 'Seferihisar'];
@@ -23,10 +23,6 @@ const faq = [
   {
     q: "İzmir'in hangi ilçelerine gidiyorsunuz?",
     a: `İzmir'in tüm ilçelerine çalışıyoruz: ${[...merkez, ...yakinCevre, ...uzakIlce].join(', ')} ve diğerleri. Adresiniz listede yoksa da arayın, planlayalım.`,
-  },
-  {
-    q: 'Şehir içinde parsiyel ya da küçük yük alıyor musunuz?',
-    a: 'Evet. Birkaç paletlik şehir içi yükleri de aynı sıcaklıktaki diğer teslimatlarla birleştirerek taşıyoruz.',
   },
   {
     q: 'Şehir içi nakliye fiyatı nasıl belirleniyor?',
@@ -76,7 +72,7 @@ const crumbs = [
           <tbody>
             <tr><th scope="row">Kapsam</th><td>İzmir'in tüm ilçeleri</td></tr>
             <tr><th scope="row">Sıcaklık</th><td>{company.fleet.tempRange}</td></tr>
-            <tr><th scope="row">Taşıma</th><td>Komple araç veya parsiyel</td></tr>
+            <tr><th scope="row">Taşıma</th><td>Komple araç</td></tr>
           </tbody>
         </table>
       </div>
