@@ -127,7 +127,6 @@ li {
 }
 
 .btn {
-  box-shadow: 0 1px 0 rgba(19, 35, 59, 0.08);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -136,7 +135,7 @@ li {
   padding: 0.6rem 1.2rem;
   font: 600 1.05rem/1 var(--font);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1.5px solid var(--navy);
 }
 
@@ -245,45 +244,4 @@ li {
     grid-template-columns: 1fr 1fr;
     gap: 3.5rem;
   }
-}
-
-/* v2 */
-.section h2::before {
-  content: '';
-  display: block;
-  width: 2.5rem;
-  height: 4px;
-  margin-bottom: 0.7rem;
-  background: var(--amber);
-  border-radius: 2px;
-}
-
-.chips {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.chips li {
-  margin: 0;
-}
-
-.chip {
-  display: inline-block;
-  padding: 0.5rem 0.95rem;
-  background: var(--white);
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--navy);
-}
-
-.chip:hover {
-  border-color: var(--navy);
-  background: var(--navy);
-  color: var(--white);
 }
